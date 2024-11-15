@@ -42,5 +42,5 @@ El proyecto está organizado en las siguientes secciones principales:
 
 ## Enlaces de Entrega
 
-- [**Enlace al Proyecto en Google Drive**](#) (Público)
-- [**URL del Proyecto en GitHub Pages**](#)
+- https://drive.google.com/drive/folders/1oT5Yy21kP8o5wWPjixHKwrsIwfTPd0dt?usp=drive_link
+- https://dulce-alfajor2.netlify.app/
