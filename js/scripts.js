@@ -34,7 +34,7 @@ function updateQuantity(button, change) {
 
     // Asegurarse que la cantidad no sea menor a 0
     currentQuantity = Math.max(0, currentQuantity + change);
-    
+
     quantitySpan.innerText = currentQuantity;
 }
 
@@ -79,7 +79,17 @@ if (document.getElementById('card-container')) {
             </div>
         `;
         cardContainer.appendChild(productDiv);
-    };
+
+        // Verificar si el modo oscuro está activado y aplicarlo a los nuevos productos
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            // Aplicar el modo oscuro a toda la tarjeta
+            productDiv.classList.add('dark-mode');
+            productDiv.querySelector('.price').classList.add('dark-mode');
+            productDiv.querySelector('.quantity').classList.add('dark-mode'); // Asegúrate de agregar dark-mode al número de cantidad
+            productDiv.querySelectorAll('.quantity-controls button').forEach(button => button.classList.add('dark-mode'));
+        }
+    }
 };
 
 if (document.getElementById('grid-container')) {
