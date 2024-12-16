@@ -333,6 +333,46 @@ form button {
     margin: 5px 15px;
 }
 
+/* Estilos para el modal */
+.modal {
+    display: none; /* El modal está oculto por defecto */
+    position: fixed;
+    z-index: 1; /* Asegura que el modal esté por encima de otros contenidos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente */
+    padding-top: 100px;
+    text-align: center;
+}
+
+.modal-content {
+    background-color: lightblue !important;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+}
+
+.close-btn {
+    color: #aaa;
+    font-size: 22px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .switch {
     position: absolute;
     right: 20px;
@@ -480,6 +520,42 @@ body.dark-mode .carousel h2 {
 
 body.dark-mode .carousel-inner img {
     filter: brightness(0.6);
+}
+
+/* Carrito en modo oscuro */
+.cart-container.dark-mode {
+    background-color: #3a3a3a !important;
+    border: 1px solid #444 !important;
+    color: white !important;
+}
+
+.cart-item.dark-mode {
+    border-bottom: 1px solid #555 !important;
+}
+
+.cart-item img.dark-mode {
+    filter: brightness(0.8) !important;
+}
+
+.cart-item-title.dark-mode {
+    color: white !important;
+}
+
+.cart-item-price.dark-mode {
+    color: #ffdb70 !important;
+}
+
+.cart-summary.dark-mode {
+    color: #fff !important;
+}
+
+.checkout-btn.dark-mode {
+    background-color: #ffdb70 !important;
+    color: #2c2c2c !important;
+}
+
+.checkout-btn.dark-mode:hover {
+    background-color: #e5c65b !important;
 }
 
 .quantity-controls {
