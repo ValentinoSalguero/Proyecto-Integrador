@@ -1,48 +1,103 @@
-// Crear productos dinámicamente
-var products = [
-    { title: "Alfajor Deuble Negro", price: 1000, image: "/images/products/Photo 00.png" },
-    { title: "Alfajor Simple Night", price: 700, image: "/images/products/Photo 01.png" },
-    { title: "Alfajor Genio", price: 500, image: "/images/products/Photo 02.png" },
-    { title: "Alfajor Guachoo Blanco", price: 600, image: "/images/products/Photo 03.png" },
-    { title: "Alfajor Happy Food", price: 600, image: "/images/products/Photo 04.png" },
-    { title: "Alfajor Guolis", price: 900, image: "/images/products/Photo 05.png" },
-    { title: "Alfajor Cachafaz", price: 1200, image: "/images/products/Photo 06.png" },
-    { title: "Alfajor Lule Muu", price: 600, image: "/images/products/Photo 07.png" },
-    { title: "Alfajor Oreo Trilogía", price: 1000, image: "/images/products/Photo 08.png" },
-    { title: "Alfajor Full Maní", price: 800, image: "/images/products/Photo 09.png" },
-    { title: "Alfajor Café Martínez Blanco", price: 700, image: "/images/products/Photo 10.png" },
-    { title: "Alfajor Smams", price: 800, image: "/images/products/Photo 11.png" },
-    { title: "Alfajor Café Martínez Negro", price: 700, image: "/images/products/Photo 12.png" },
-    { title: "Alfajor Capitán Del Espacio", price: 900, image: "/images/products/Photo 13.png" },
-    { title: "Alfajor Rasta", price: 800, image: "/images/products/Photo 14.png" },
-    { title: "Alfajor Guachoo Negro", price: 800, image: "/images/products/Photo 15.png" },
-];
+document.addEventListener("DOMContentLoaded", () => {
+    const cardContainer = document.getElementById('card-container');
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const pageInfo = document.getElementById("page-info");
 
-var cardContainer = document.getElementById('card-container');
+    const limit = 20;
+    let currentPage = 1;
+    let totalProductos = 0;
 
-const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    let isDarkMode = localStorage.getItem('darkMode') === 'true';
 
-// Crear y mostrar los productos en la página
-products.forEach((product, index) => {
-    var productDiv = document.createElement('div');
-    productDiv.className = 'card-product flex';
-    productDiv.innerHTML = `
-        <div class="container-img">
-            <img src="${product.image}" alt="${product.title}">
-        </div>
-        <div class="card-details">
-            <h3 class="card-product_title">${product.title}</h3>
-            <p class="price">$ ${product.price}</p>
-            <button class="btn-add" onclick="addToCart(${index});">COMPRAR</button>
-        </div>
-    `;
-    cardContainer.appendChild(productDiv);
+    // Cargar productos según la página actual
+    function fetchProductos(page) {
+        const skip = (page - 1) * limit;
 
-    if (isDarkMode) {
-        productDiv.classList.add('dark-mode');
-        let priceElement = productDiv.querySelector('.price');
-        if (priceElement) {
-            priceElement.classList.add('dark-mode');
-        }
+        fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`)
+        .then(response => response.json())
+        .then(data => {
+            totalProductos = data.total;
+            const productos = data.products;
+
+            cardContainer.innerHTML = '';
+
+            productos.forEach(product => {
+                const price = product.price.toFixed(2);
+
+                let productDiv = document.createElement('div');
+                productDiv.className = 'card-product flex';
+                productDiv.innerHTML = `
+                    <div class="container-img">
+                        <img src="${product.images[0]}" alt="${product.title}">
+                    </div>
+                    <div class="card-details">
+                        <h3 class="card-product_title">${product.title}</h3>
+                        <p class="price">$ ${price}</p>
+                        <button class="btn-add" onclick="addToCart('${product.title}', ${price}, '${product.images[0]}');">COMPRAR</button>
+                    </div>
+                `;
+                cardContainer.appendChild(productDiv);
+            });
+
+            // Aplicar el modo oscuro a las tarjetas cargadas
+            applyDarkModeToCards();
+
+            pageInfo.textContent = currentPage;
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = (currentPage * limit) >= totalProductos;
+        })
+        .catch(error => console.error('Error al cargar los productos:', error));
     }
+
+    // Aplicar o quitar el modo oscuro de las tarjetas cargadas
+    function applyDarkModeToCards() {
+        const cardProducts = document.querySelectorAll('.card-product');
+        cardProducts.forEach(card => {
+            if (isDarkMode) {
+                card.classList.add('dark-mode');
+                let priceElement = card.querySelector('.price');
+                if (priceElement) {
+                    priceElement.classList.add('dark-mode');
+                }
+            } else {
+                card.classList.remove('dark-mode');
+                let priceElement = card.querySelector('.price');
+                if (priceElement) {
+                    priceElement.classList.remove('dark-mode');
+                }
+            }
+        });
+    }
+
+    // Cambiar entre modo oscuro y claro cuando el checkbox es marcado o desmarcado
+    document.getElementById('input').addEventListener('change', function () {
+        isDarkMode = this.checked;
+
+        // Guardar la preferencia en el almacenamiento local
+        localStorage.setItem('darkMode', isDarkMode);
+        applyDarkModeToCards(); // Aplicar el modo oscuro a las tarjetas
+
+        // Cambiar el estilo de los elementos del documento según el modo
+        document.body.classList.toggle('dark-mode', isDarkMode);
+        document.querySelector('header').classList.toggle('dark-mode', isDarkMode);
+        document.querySelector('footer').classList.toggle('dark-mode', isDarkMode);
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(link => link.classList.toggle('dark-mode', isDarkMode)); 
+    });
+
+    prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchProductos(currentPage);
+        }
+    });
+
+    nextBtn.addEventListener("click", () => {
+        if ((currentPage * limit) < totalProductos) {
+            currentPage++;
+            fetchProductos(currentPage);
+        }
+    });
+
+    fetchProductos(currentPage);
 });
