@@ -50,4 +50,4 @@ El proyecto se organiza en las siguientes áreas clave:
 ## Enlaces de Entrega
 
 - [Enlace a Netlify](https://dulce-alfajor2.netlify.app/)
-- [Enlace a GitHub](https://github.com/usuario/proyecto-integrador)
+- [Enlace a GitHub](https://github.com/ValentinoSalguero/Proyecto-Integrador)
