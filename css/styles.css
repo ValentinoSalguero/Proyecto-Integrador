@@ -997,18 +997,39 @@ body.dark-mode .cart-item .item-details p {
     }
 
     .navbar {
-        padding: 10px 20px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100%;
+        background-color: #4e99b3 !important;
+    }
+
+    .container-fluid {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100%;
+        background-color: #4e99b3 !important;
+    }
+
+    .navbar-nav {
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     .nav-item {
         display: inline-block !important;
         margin-right: 10px !important;
-        margin-bottom: 10px !important; 
+        margin-bottom: 10px !important;
     }
 
     .nav-link {
         font-size: 14px !important;
         padding: 5px 10px !important;
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
     }
 }
 
