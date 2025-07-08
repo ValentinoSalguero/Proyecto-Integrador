@@ -1,64 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
     try {
         const cardContainer = document.getElementById('card-container');
-        const prevBtn = document.getElementById("prev-btn");
-        const nextBtn = document.getElementById("next-btn");
-        const pageInfo = document.getElementById("page-info");
-
-        const limit = 12;
-        let currentPage = 1;
-        let totalProductos = 0;
 
         let isDarkMode = localStorage.getItem('darkMode') === 'true';
 
-        // Cargar productos según la página actual
-        function fetchProductos(page) {
-            try {
-                const skip = (page - 1) * limit;
+        function crearCardProducto(product) {
+            const price = product.precio.toFixed(2);
+            let productDiv = document.createElement('div');
+            productDiv.className = 'card-product flex';
+            productDiv.innerHTML = `
+                <div class="container-img"> <img src="${product.imagenUrl || product.images && product.images[0] || 'https://via.placeholder.com/150'}" alt="${product.nombre}" class="product-image">
+                </div>
+                <div class="card-details"> <h3 class="card-product_title">${product.nombre}</h3>
+                    <p class="card-product_description">${product.descripcion || 'Sin descripción'}</p>
+                    <p>Stock: ${product.stock}</p>
+                    <p class="price">$ ${price}</p>
+                    <button class="btn-add"
+                        onclick="addToCart('${product.id}', '${product.nombre}', ${price}, '${product.imagenUrl || product.images && product.images[0] || 'https://via.placeholder.com/150'}', ${product.stock});">
+                        COMPRAR
+                    </button>
+                </div>
+            `;
+            return productDiv;
+        }
 
-                fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`)
+        function fetchProductos() {
+            try {
+                fetch(`http://localhost:8080/api/productos`)
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error en la respuesta de la API');
-                    }
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
                     return response.json();
                 })
                 .then(data => {
                     try {
-                        totalProductos = data.total;
-                        const productos = data.products;
+                        const productos = data;
+                        const cardContainer = document.getElementById('card-container');
 
                         cardContainer.innerHTML = '';
 
                         productos.forEach(product => {
-                            const price = product.price.toFixed(2);
-
-                            let productDiv = document.createElement('div');
-                            productDiv.className = 'card-product flex';
-                            productDiv.innerHTML = `
-                                <div class="container-img">
-                                    <img src="${product.images[0]}" alt="${product.title}">
-                                </div>
-                                <div class="card-details">
-                                    <h3 class="card-product_title">${product.title}</h3>
-                                    <p class="price">$ ${price}</p>
-                                    <button class="btn-add" onclick="addToCart('${product.title}', ${price}, '${product.images[0]}');">COMPRAR</button>
-                                </div>
-                            `;
+                            const productDiv = crearCardProducto(product);
                             cardContainer.appendChild(productDiv);
                         });
 
                         applyDarkModeToCards();
 
-                        pageInfo.textContent = currentPage;
-                        prevBtn.disabled = currentPage === 1;
-                        nextBtn.disabled = (currentPage * limit) >= totalProductos;
+                        if (pageInfo) pageInfo.textContent = ``;
+                        if (prevBtn) prevBtn.style.display = 'none';
+                        if (nextBtn) nextBtn.style.display = 'none';
+
                     } catch (innerError) {
-                        console.error('Error al procesar los datos de los productos:', innerError);
+                        console.error('Error al procesar los datos de la API:', innerError);
                     }
                 })
                 .catch(error => {
                     console.error('Error al cargar los productos desde la API:', error);
+                    cardContainer.innerHTML = '<p>Lo sentimos, no pudimos cargar los productos en este momento. Intente de nuevo más tarde.</p>';
                 });
             } catch (outerError) {
                 console.error('Error en la función fetchProductos:', outerError);
@@ -108,29 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        prevBtn.addEventListener("click", () => {
-            try {
-                if (currentPage > 1) {
-                    currentPage--;
-                    fetchProductos(currentPage);
-                }
-            } catch (error) {
-                console.error('Error al cambiar a la página anterior:', error);
-            }
-        });
-
-        nextBtn.addEventListener("click", () => {
-            try {
-                if ((currentPage * limit) < totalProductos) {
-                    currentPage++;
-                    fetchProductos(currentPage);
-                }
-            } catch (error) {
-                console.error('Error al cambiar a la página siguiente:', error);
-            }
-        });
-
-        fetchProductos(currentPage);
+        fetchProductos(); 
     } catch (error) {
         console.error('Error en la inicialización del DOMContentLoaded:', error);
     }

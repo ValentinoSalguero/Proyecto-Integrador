@@ -850,6 +850,48 @@ body.dark-mode .cart-item .item-details p {
     color: #ddd;
 }
 
+.menu-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #e0f7fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-title {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.menu-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.menu-opciones a {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: center;
+    max-width: 400px;
+}
+
+.menu-opciones a:hover {
+    background-color: #0056b3;
+}
+
 /* Media Queries para diferentes tamaños de pantalla */
 
 /* Móviles (hasta 600px) */
