@@ -2,49 +2,49 @@ try {
     var reviews = [
         {
             stars: "⭐⭐⭐⭐⭐",
-            image: "/Proyecto-Integrador-main/images/reviews/Photo 00.png",
+            image: "images/reviews/Photo 00.png",
             text: "¡Excelente servicio y calidad de productos!",
             author: "Juan Pérez"
         },
         {
             stars: "⭐⭐⭐⭐⭐",
-            image: "/Proyecto-Integrador-main/images/reviews/Photo 01.png",
+            image: "images/reviews/Photo 01.png",
             text: "Me encantó la experiencia de compra. ¡Volveré!",
             author: "Ana Gómez"
         },
         {
             stars: "⭐⭐⭐⭐⭐",
-            image: "/Proyecto-Integrador-main/images/reviews/Photo 02.png",
+            image: "images/reviews/Photo 02.png",
             text: "Un lugar increíble con un personal muy amable.",
             author: "Carlos Martínez"
         },
         {
             stars: "⭐⭐⭐⭐⭐",
-            image: "/Proyecto-Integrador-main/images/reviews/Photo 03.png",
+            image: "images/reviews/Photo 03.png",
             text: "Los productos son de alta calidad y llegan rápido.",
             author: "María López"
         },
         {
             stars: "⭐⭐⭐⭐⭐",
-            image: "/Proyecto-Integrador-main/images/reviews/Photo 04.png",
+            image: "images/reviews/Photo 04.png",
             text: "Recomiendo este lugar a todos mis amigos :D",
             author: "Laura Torres"
         },
         {
             stars: "⭐⭐⭐⭐⭐",
-            image: "/Proyecto-Integrador-main/images/reviews/Photo 05.png",
+            image: "images/reviews/Photo 05.png",
             text: "La atención fue rápida y amable. ¡Muy recomendable!",
             author: "Alberto Castillo"
         },
         {
             stars: "⭐⭐⭐⭐⭐",
-            image: "/Proyecto-Integrador-main/images/reviews/Photo 06.png",
+            image: "images/reviews/Photo 06.png",
             text: "Gran variedad de productos y una excelente experiencia de compra.",
             author: "Sofía Ruiz"
         },
         {
             stars: "⭐⭐⭐⭐⭐",
-            image: "/Proyecto-Integrador-main/images/reviews/Photo 07.png",
+            image: "images/reviews/Photo 07.png",
             text: "Los productos llegaron en perfectas condiciones.",
             author: "Miguel Hernández"
         }
